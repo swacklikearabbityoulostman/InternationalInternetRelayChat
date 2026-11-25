@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>International Internet Relay Chat (IIRC)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-window">
+    <div class="toolbar">
+      <button class="tool-button" id="connectBtn" title="Connect"><span class="tool-glyph" aria-hidden="true">↔</span><span>Connect</span></button>
+      <button class="tool-button" id="joinBtn" title="Join channel"># <span>Join</span></button>
+      <button class="tool-button" id="nickBtn" title="Change nickname"><span class="tool-glyph id-glyph" aria-hidden="true">ID</span><span>Nickname</span></button>
+      <div class="toolbar-separator"></div>
+      <div class="toolbar-spacer"></div>
+      <span class="network-label">Network:</span>
+      <select id="networkSelect" aria-label="Network">
+        <option value="Libera.Chat">Libera.Chat</option>
+        <option value="OFTC">OFTC</option>
+        <option value="IRCnet">IRCnet</option>
+        <option value="EFnet">EFnet</option>
+        <option value="Custom">Custom…</option>
+      </select>
+    </div>
+
+    <main class="workspace">
+      <aside class="tree-pane">
+        <div class="pane-heading">NETWORKS & CHANNELS</div>
+        <div class="tree-content" id="channelTree">
+          <div class="tree-network"><span class="tree-arrow">▸</span><span class="tree-icon">◉</span><span>Libera.Chat</span></div>
+          <div class="tree-placeholder">Connect to a network to begin.</div>
+        </div>
+        <div class="tree-footer"><span class="tiny-led"></span> Network list</div>
+      </aside>
+
+      <section class="chat-pane">
+        <div class="tab-strip" id="tabs">
+          <div class="tab active" data-target="status">Status</div>
+        </div>
+        <div class="topic-bar" id="topicBar">Welcome to IIRC. Connect to an IRC network to get started.</div>
+        <div class="message-log" id="messageLog" aria-live="polite">
+          <div class="log-line system"><span class="timestamp">[--:--]</span><span class="message">Wireline frontend preview loaded.</span></div>
+          <div class="log-line system"><span class="timestamp">[--:--]</span><span class="message">This is a UI prototype; network messaging is not connected yet.</span></div>
+          <div class="log-line notice"><span class="timestamp">[--:--]</span><span class="message">Tip: use the Connect button, then try /join #general.</span></div>
+        </div>
+        <form class="input-row" id="messageForm">
+          <span class="input-prefix" id="inputPrefix">›</span>
+          <input id="messageInput" autocomplete="off" placeholder="Type a message or IRC command…" aria-label="Message">
+          <button type="submit" class="send-button">Send</button>
+        </form>
+        <div class="statusbar">
+          <span id="bottomStatus">Ready</span>
+          <span>UTF-8</span>
+          <span>Wireline Web Preview 0.1</span>
+        </div>
+      </section>
+
+      <aside class="users-pane">
+        <div class="pane-heading">USERS <span id="userCount">(0)</span></div>
+        <div class="user-list" id="userList">
+          <div class="empty-users">No channel selected</div>
+        </div>
+        <div class="user-footer">Operators are marked with @</div>
+      </aside>
+    </main>
+    <footer class="app-footer">
+      <span>IIRC</span>
+      <span>Classic IRC-inspired web client</span>
+      <span class="footer-right">Not affiliated with any IRC network</span>
+    </footer>
+  </div>
+
+  <dialog id="connectDialog">
+    <form method="dialog" id="connectForm">
+      <div class="dialog-title">Connect to IRC network</div>
+      <label>Network
+        <select id="dialogNetwork">
+          <option>Libera.Chat</option><option>OFTC</option><option>IRCnet</option><option>EFnet</option><option>Custom</option>
+        </select>
+      </label>
+      <label>Nickname <input id="nickInput" value="Guest_" maxlength="24" required></label>
+      <label>Server hostname <input id="serverInput" value="irc.libera.chat" required></label>
+      <p class="dialog-note">This preview simulates a connection locally. A later backend will provide the actual IRC connection.</p>
+      <div class="dialog-actions"><button value="cancel" class="secondary-button">Cancel</button><button id="dialogConnect" value="connect" class="primary-button">Connect</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="joinDialog">
+    <form method="dialog" id="joinForm">
+      <div class="dialog-title">Join a channel</div>
+      <label>Channel name <input id="channelInput" value="#general" required></label>
+      <div class="dialog-actions"><button value="cancel" class="secondary-button">Cancel</button><button id="dialogJoin" value="join" class="primary-button">Join channel</button></div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
